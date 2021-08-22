@@ -53,7 +53,7 @@ import org.apache.pulsar.broker.authentication.AuthenticationProvider;
 import org.apache.pulsar.common.naming.TopicName;
 
 /**
- * Proxy inbound handler is the bridge between proxy and MoP.
+ * Proxy inbound handler is the bridge between proxy and SoP.
  */
 @Slf4j
 public class ProxyInboundHandler implements ProtocolMethodProcessor {
@@ -140,7 +140,7 @@ public class ProxyInboundHandler implements ProtocolMethodProcessor {
         log.info("processPubAck...");
     }
 
-    // proxy -> MoP
+    // proxy -> SoP
     @Override
     public void processPublish(Channel channel, MqttPublishMessage msg) {
         if (log.isDebugEnabled()) {
@@ -378,7 +378,7 @@ public class ProxyInboundHandler implements ProtocolMethodProcessor {
         }
         proxyHandler.brokerFuture().whenComplete((ignored, throwable) -> {
             if (throwable != null) {
-                log.error("[{}] MoP proxy failed to connect with MoP broker({}:{}).",
+                log.error("[{}] SoP proxy failed to connect with SoP broker({}:{}).",
                         msg.fixedHeader().messageType(), mqttBrokerHost, mqttBrokerPort, throwable);
                 channel.close();
                 return;

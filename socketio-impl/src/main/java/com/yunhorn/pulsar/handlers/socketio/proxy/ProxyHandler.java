@@ -37,7 +37,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Proxy handler is the bridge between proxy and MoP.
+ * Proxy handler is the bridge between proxy and SoP.
  */
 @Slf4j
 public class ProxyHandler {
@@ -46,7 +46,7 @@ public class ProxyHandler {
     // client -> proxy
     private Channel clientChannel;
     @Getter
-    // proxy -> MoP
+    // proxy -> SoP
     private Channel brokerChannel;
     private State state;
     private List<Object> connectMsgList;
@@ -150,7 +150,7 @@ public class ProxyHandler {
 
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-            log.error("Failed to create connection with MoP broker.", cause);
+            log.error("Failed to create connection with SoP broker.", cause);
             state = State.Failed;
             brokerFuture.completeExceptionally(cause);
         }

@@ -35,7 +35,7 @@ import org.apache.pulsar.common.util.netty.EventLoopUtil;
 import org.apache.pulsar.zookeeper.ZooKeeperClientFactory;
 
 /**
- * This service is used for redirecting MQTT client request to proper MQTT protocol handler Broker.
+ * This service is used for redirecting SocketIO client request to proper SocketIO protocol handler Broker.
  */
 @Slf4j
 public class ProxyService implements Closeable {
@@ -55,8 +55,8 @@ public class ProxyService implements Closeable {
     @Getter
     private EventLoopGroup workerGroup;
 
-    private DefaultThreadFactory acceptorThreadFactory = new DefaultThreadFactory("mqtt-redirect-acceptor");
-    private DefaultThreadFactory workerThreadFactory = new DefaultThreadFactory("mqtt-redirect-io");
+    private DefaultThreadFactory acceptorThreadFactory = new DefaultThreadFactory("SocketIO-redirect-acceptor");
+    private DefaultThreadFactory workerThreadFactory = new DefaultThreadFactory("SocketIO-redirect-io");
     private static final int numThreads = Runtime.getRuntime().availableProcessors();
 
     private ZooKeeperClientFactory zkClientFactory = null;
@@ -75,7 +75,7 @@ public class ProxyService implements Closeable {
 
         this.proxyConfig = proxyConfig;
         this.pulsarService = pulsarService;
-        this.tenant = this.proxyConfig.getMqttTenant();
+        this.tenant = this.proxyConfig.getSocketIOTenant();
         this.authProviders = authProviders;
         acceptorGroup = EventLoopUtil.newEventLoopGroup(1, false, acceptorThreadFactory);
         workerGroup = EventLoopUtil.newEventLoopGroup(numThreads, false, workerThreadFactory);
@@ -83,8 +83,8 @@ public class ProxyService implements Closeable {
 
     private void configValid(ProxyConfiguration proxyConfig) {
         checkNotNull(proxyConfig);
-        checkArgument(proxyConfig.getMqttProxyPort() > 0);
-        checkNotNull(proxyConfig.getMqttTenant());
+        checkArgument(proxyConfig.getSocketIOProxyPort() > 0);
+        checkNotNull(proxyConfig.getSocketIOTenant());
         checkNotNull(proxyConfig.getBrokerServiceURL());
     }
 
@@ -95,9 +95,9 @@ public class ProxyService implements Closeable {
         EventLoopUtil.enableTriggeredMode(serverBootstrap);
         serverBootstrap.childHandler(new ServiceChannelInitializer(this));
         try {
-            listenChannel = serverBootstrap.bind(proxyConfig.getMqttProxyPort()).sync().channel();
+            listenChannel = serverBootstrap.bind(proxyConfig.getSocketIOProxyPort()).sync().channel();
         } catch (InterruptedException e) {
-            throw new IOException("Failed to bind Pulsar Proxy on port " + proxyConfig.getMqttProxyPort(), e);
+            throw new IOException("Failed to bind Pulsar Proxy on port " + proxyConfig.getSocketIOProxyPort(), e);
         }
 
         this.pulsarClient = new PulsarClientImpl(createClientConfiguration());

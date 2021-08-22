@@ -85,7 +85,7 @@ public class ProxyConnection extends ChannelInboundHandlerAdapter{
         MqttMessageType messageType = msg.fixedHeader().messageType();
 
         if (log.isDebugEnabled()) {
-            log.info("Processing MQTT message, type={}", messageType);
+            log.info("Processing SocketIO message, type={}", messageType);
         }
         try {
             switch (messageType) {

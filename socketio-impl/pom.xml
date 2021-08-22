@@ -10,8 +10,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>pulsar-protocol-handler-socketio</artifactId>
-  <name>StreamNative :: Pulsar Protocol Handler :: MQTT</name>
-  <description>MQTT on Pulsar implemented using Pulsar Protocol Handler</description>
+  <name>Yunhorn :: Pulsar Protocol Handler :: SocketIO</name>
+  <description>SocketIO on Pulsar implemented using Pulsar Protocol Handler</description>
 
   <build>
     <plugins>

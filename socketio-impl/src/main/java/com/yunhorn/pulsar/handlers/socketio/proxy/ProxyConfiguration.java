@@ -21,7 +21,7 @@ import org.apache.pulsar.common.configuration.Category;
 import org.apache.pulsar.common.configuration.FieldContext;
 
 /**
- * Configuration for MQTT proxy service.
+ * Configuration for SocketIO proxy service.
  */
 @Getter
 @Setter
@@ -41,7 +41,7 @@ public class ProxyConfiguration {
     @FieldContext(
             category = CATEGORY_SOCKETIO,
             required = true,
-            doc = "Mqtt on Pulsar Broker tenant"
+            doc = "SocketIO on Pulsar Broker tenant"
     )
     private String socketIOTenant = "public";
 
@@ -52,32 +52,11 @@ public class ProxyConfiguration {
     private List<String> mqttAuthenticationMethods = ImmutableList.of();
 
     @FieldContext(
-            category = CATEGORY_SOCKETIO,
-            required = true,
-            doc = "The maximum number of channels which can exist concurrently on a connection."
-    )
-    private int mqttMaxNoOfChannels = 64;
-
-    @FieldContext(
-            category = CATEGORY_SOCKETIO,
-            required = true,
-            doc = "The maximum frame size on a connection."
-    )
-    private int mqttMaxFrameSize = 4 * 1024 * 1024;
-
-    @FieldContext(
-            category = CATEGORY_SOCKETIO,
-            required = true,
-            doc = "The default heartbeat timeout on broker"
-    )
-    private int mqttHeartBeat = 60 * 1000;
-
-    @FieldContext(
             category = CATEGORY_SOCKETIO_PROXY,
             required = false,
-            doc = "The mqtt proxy port"
+            doc = "The socketIO proxy port"
     )
-    private int mqttProxyPort = 5682;
+    private int socketIOProxyPort = 5682;
 
     @FieldContext(
             category = CATEGORY_BROKER_DISCOVERY,
@@ -100,14 +79,14 @@ public class ProxyConfiguration {
     @FieldContext(
             category = CATEGORY_SOCKETIO,
             required = true,
-            doc = "Default Pulsar tenant that the MQTT server used."
+            doc = "Default Pulsar tenant that the SocketIO server used."
     )
     private String defaultTenant = "public";
 
     @FieldContext(
             category = CATEGORY_SOCKETIO,
             required = true,
-            doc = "Default Pulsar namespace that the MQTT server used."
+            doc = "Default Pulsar namespace that the SocketIO server used."
     )
     private String defaultNamespace = "default";
 }
